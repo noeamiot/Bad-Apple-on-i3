@@ -9,14 +9,14 @@ int main(int argc, char *argv[]) {
 	unsigned int n = 0;
 
 	int x, y, count;
-	 
-	// Open an input pipe from ffmpeg -re 
+
+	// Open an input pipe from ffmpeg -re
 	FILE *pipein = popen("ffmpeg -re -i Bad_Apple-FtutLA63Cp8-nosound.mp4 -vf 'scale=40:40,mpdecimate,setpts=0.20*PTS' -f image2pipe -vcodec rawvideo  -pix_fmt rgb24 -", "r");
 
 	FILE* fds[heigth*width];
 	for(int i = 0; i < heigth*width; i++) {
 		char name[50];
-		sprintf(name, "fds/controlsequences%d.txt", i); 
+		sprintf(name, "fds/controlsequences%d.txt", i);
 		fds[i] = fopen(name, "w");
 	}
 
@@ -25,10 +25,10 @@ int main(int argc, char *argv[]) {
 	while(1) {
 		// Read a frame from the input pipe into the buffer
 		count = fread(frame, 1, heigth * width * 3, pipein);
-			
+
 		// If we didn't get a frame of video, we're probably at the end
 		if (count != heigth * width * 3) break;
-			
+
 		// Process this frame
 		for (x = 0 ; x < heigth ; ++x) {
 			for (y = 0 ; y < width ; ++y) {
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-	 
+
 	// Close all files
 	for(int i = 0; i < heigth*width; i++) {
 		fclose(fds[i]);
