@@ -1,0 +1,10 @@
+# This goes in you i3 config file
+# bad apple specific
+# Create a workspace var
+set $wsba "Bad Apple"
+
+# Mod key + b will switch to bad apple workspace & hide the i3 bar & hide all XTerm windows borders
+bindsym $mod+b workspace $wsba; bar mode hide; [class="^XTerm$"] border none
+
+# If you want this permanently in your config, you should add  "; bar mode dock" to each binding that switch workspace
+# You should as well add a line restoring borders for XTerm, like this "; [class="^XTerm$"] border normal"
