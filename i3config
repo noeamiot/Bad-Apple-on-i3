@@ -1,5 +1,4 @@
 # This goes in you i3 config file
-# bad apple specific
 # Create a workspace var
 set $wsba "Bad Apple"
 
