@@ -9,13 +9,14 @@ Bad Apple !! But it's on the i3 tiling windows manager.
 
 
 ## How does it work ?
-Each square visible on the screen (which we'll call pixels) is a XTerm instance waiting for an order to change it's background & foreground color by tailing constantly a file dedicated to this pixel.
+Each square visible on the screen is an XTerm instance waiting for an order to change it's background & foreground color by tailing constantly a file dedicated to this pixel.
 
-For a resolution of 40*40, a total of 1600 Xterm instances must be running and tailing 1600 files.
+For a resolution of 40x40, a total of 1600 Xterm instances must be running and tailing 1600 files.
 The C program then reads the badapple video using ffmpeg and for each pixel writes a control character to a file corresponding to the pixel.
 
 To turn a pixel black, we write `\e]11;rgb:00/00/00\a\e]10;rgb:00/00/00\a` and to turn it white we write `\e]11;rgb:ff/ff/ff\a\e]10;rgb:ff/ff/ff\a`.
-The `\e]11;` part is for the background and \e]10;` one for the foreground.
+
+The `\e]11;` part is for the background and `\e]10;` one for the foreground.
 
 
 ## Can I reproduce it ?
@@ -27,6 +28,7 @@ You can ! But be prepared, there are a few things to know before doing that.
 If you still want to continue (and fry your config with 14400 writes/s) this is the way to go :
 - Download the badapple video (using [youtube-dl](https://github.com/ytdl-org/youtube-dl/) for example)
 - Update `badApple.c` according to your need then compile it `gcc badApple.c`
+- Add the `i3config` file content to your i3 config file (and maybe change your config according to theses changes) then reload your i3 configuration
 - Create the directory for the files `mkdir fds`
 - Create the files (you can set the default color or the coordinates or empty files) `for i in {0..1599..1}; do echo "$i" >  \`pwd\`/fds/controlsequences$i.txt; done;`
 - Create the i3 layout (the only parameter is the resolution) `./makeLayout.sh 40 > layout`
