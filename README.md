@@ -30,10 +30,10 @@ If you still want to continue (and fry your config with 14400 writes/s) this is 
 - Update `badApple.c` according to your need then compile it `gcc badApple.c`
 - Add the `i3config` file content to your i3 config file (and maybe change your config according to theses changes) then reload your i3 configuration
 - Create the directory for the files `mkdir fds`
-- Create the files (you can set the default color or the coordinates or empty files) `for i in {0..1599..1}; do echo "$i" >  \`pwd\`/fds/controlsequences$i.txt; done;`
+- Create the files (you can set the default color or the coordinates or empty files) ``for i in {0..1599..1}; do echo "$i" >  `pwd`/fds/controlsequences$i.txt; done;``
 - Create the i3 layout (the only parameter is the resolution) `./makeLayout.sh 40 > layout`
-- Tell i3 to use the layout in the Bad Apple workspace `i3-msg "workspace Bad Apple; append_layout \`pwd\`/layout"` (can take a while)
-- Create the pixels by launching a bunch of XTerm `for i in {0..1599..1}; do xterm -T "badapple$i" -e bash -c "tail -f \`pwd\`/fds/controlsequences$i.txt" &  done;`
+- Tell i3 to use the layout in the Bad Apple workspace ``i3-msg "workspace Bad Apple; append_layout `pwd`/layout"`` (can take a while)
+- Create the pixels by launching a bunch of XTerm ``for i in {0..1599..1}; do xterm -T "badapple$i" -e bash -c "tail -f `pwd`/fds/controlsequences$i.txt" &  done;`` (will take a while)
 - Run the compiled C program `./a.out`
 - Profit
 
