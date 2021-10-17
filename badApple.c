@@ -2,24 +2,28 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-	int heigth = 40;
-	int width = 40;
-	unsigned char frame[40][40][3] = {0};
-	unsigned int prevframe[40][40] = {2};
+	int heigth = 30;
+	int width = 30;
+	unsigned char frame[30][30][3] = {0};
+	unsigned int prevframe[30][30] = {1};
 	unsigned int n = 0;
 
 	int x, y, count;
 
 	// Open an input pipe from ffmpeg -re
-	FILE *pipein = popen("ffmpeg -re -i Bad_Apple-FtutLA63Cp8-nosound.mp4 -vf 'scale=40:40,mpdecimate,setpts=0.20*PTS' -f image2pipe -vcodec rawvideo  -pix_fmt rgb24 -", "r");
+	FILE *pipein = popen("ffmpeg -re -i Bad_Apple-FtutLA63Cp8.mp4 -vf 'scale=30:30,mpdecimate,setpts=1*PTS' -f image2pipe -vcodec rawvideo  -pix_fmt rgb24 -", "r");
 
 	FILE* fds[heigth*width];
 	for(int i = 0; i < heigth*width; i++) {
 		char name[50];
 		sprintf(name, "fds/controlsequences%d.txt", i);
 		fds[i] = fopen(name, "w");
+		fputs("\e]11;rgb:00/00/00\a\e]10;rgb:00/00/00\a\n", fds[i]);
+		fflush(fds[i]);
 	}
 
+	// Play the sound at the same time (requires ffplay to be installed)
+	// system("ffplay -vn Bad_Apple-FtutLA63Cp8.mp4 -autoexit -nodisp > /dev/null 2>&1 < /dev/null &");
 
 	// Process video frames
 	while(1) {
@@ -47,6 +51,9 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+
+	// If the sound was still playing, stop it (should have already stopped but shrug)
+	// system("killall ffplay");
 
 	// Close all files
 	for(int i = 0; i < heigth*width; i++) {
