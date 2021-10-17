@@ -46,4 +46,4 @@ yes.
 - The maximum resolution is 45x45 because the X11 server will not allow to move the limit above 2048.
 
 ## Can we add sound directly ?
-Yes, I didn't but you can just start ffplay of vlc in the background and play the sound as well.
+Yes, just uncomment the systems lines in the C program and ffplay will play the sound in the background. I added this option later so the video isn't recoded with that option but the result is almost the same.
