@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 	int x, y, count;
 
 	// Open an input pipe from ffmpeg -re
-	FILE *pipein = popen("ffmpeg -re -i Bad_Apple-FtutLA63Cp8-nosound.mp4 -vf 'scale=30:30,mpdecimate,setpts=1*PTS' -f image2pipe -vcodec rawvideo  -pix_fmt rgb24 -", "r");
+	FILE *pipein = popen("ffmpeg -re -i Bad_Apple-FtutLA63Cp8.mp4 -vf 'scale=30:30,mpdecimate,setpts=1*PTS' -f image2pipe -vcodec rawvideo  -pix_fmt rgb24 -", "r");
 
 	FILE* fds[heigth*width];
 	for(int i = 0; i < heigth*width; i++) {
@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
 		fflush(fds[i]);
 	}
 
+	// Play the sound at the same time (requires ffplay to be installed)
+	// system("ffplay -vn Bad_Apple-FtutLA63Cp8.mp4 -autoexit -nodisp > /dev/null 2>&1 < /dev/null &");
 
 	// Process video frames
 	while(1) {
@@ -49,6 +51,9 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+
+	// If the sound was still playing, stop it (should have already stopped but shrug)
+	// system("killall ffplay");
 
 	// Close all files
 	for(int i = 0; i < heigth*width; i++) {
